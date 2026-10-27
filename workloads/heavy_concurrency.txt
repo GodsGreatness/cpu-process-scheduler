@@ -1,0 +1,7 @@
+# PID Name Arrival Burst Priority
+1 WebSrv 0 12 2
+2 DBQuery 1 4 1
+3 BackgroundJob 2 20 5
+4 CacheFlush 3 2 1
+5 Analytics 5 8 3
+6 SecurityScan 7 6 2
