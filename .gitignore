@@ -1,0 +1,20 @@
+# Build and executable artifacts
+build/
+bin/
+*.o
+*.obj
+*.exe
+*.out
+*.app
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+*.log
+*.tmp
