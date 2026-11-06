@@ -1,5 +1,6 @@
 #include "GanttChart.hpp"
 #include <iomanip>
+#include <algorithm>
 
 void GanttChart::addSegment(int pid, const std::string& name, int start, int end) {
     if (start >= end) return;

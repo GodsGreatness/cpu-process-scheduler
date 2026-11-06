@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cassert>
 #include <vector>
+#include <stdexcept>
 
 void testFCFS() {
     std::cout << "[Test] Running FCFS Test... ";

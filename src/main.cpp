@@ -9,6 +9,9 @@
 #include <sstream>
 #include <memory>
 #include <iomanip>
+#include <vector>
+#include <string>
+#include <algorithm>
 
 std::vector<Process> loadWorkloadFromFile(const std::string& filepath) {
     std::vector<Process> processes;

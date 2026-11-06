@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <utility>
 
 struct GanttSegment {
     int pid;
