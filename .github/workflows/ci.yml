@@ -22,7 +22,7 @@ jobs:
       run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
 
     - name: Build Targets
-      run: cmake --build build --config Release
+      run: cmake --build build
 
     - name: Run Unit Tests
       run: ctest --test-dir build --output-on-failure
@@ -39,10 +39,10 @@ jobs:
       uses: ilammy/msvc-dev-cmd@v1
 
     - name: Configure CMake
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+      run: cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 
     - name: Build Targets
-      run: cmake --build build --config Release
+      run: cmake --build build --verbose
 
     - name: Run Unit Tests
-      run: ctest --test-dir build -C Release --output-on-failure
+      run: ctest --test-dir build --output-on-failure
