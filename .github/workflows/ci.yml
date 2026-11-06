@@ -7,34 +7,36 @@ on:
     branches: [ main, master ]
 
 jobs:
-  build-and-test:
-    name: ${{ matrix.name }}
-    runs-on: ${{ matrix.os }}
+  linux-build:
+    name: Linux (${{ matrix.cxx }})
+    runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        include:
-          - name: Linux (Ubuntu) - GCC
-            os: ubuntu-latest
-            cmake_generator: ""
-            cmake_cxx: "-DCMAKE_CXX_COMPILER=g++"
-
-          - name: Linux (Ubuntu) - Clang
-            os: ubuntu-latest
-            cmake_generator: ""
-            cmake_cxx: "-DCMAKE_CXX_COMPILER=clang++"
-
-          - name: Windows - MSVC
-            os: windows-latest
-            cmake_generator: '-G "Visual Studio 17 2022" -A x64'
-            cmake_cxx: ""
+        cxx: [g++, clang++]
 
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
     - name: Configure CMake
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Release ${{ matrix.cmake_generator }} ${{ matrix.cmake_cxx }}
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
+
+    - name: Build Targets
+      run: cmake --build build --config Release
+
+    - name: Run Unit Tests
+      run: ctest --test-dir build --output-on-failure
+
+  windows-build:
+    name: Windows (MSVC)
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Configure CMake
+      run: cmake -B build -G "Visual Studio 17 2022" -A x64
 
     - name: Build Targets
       run: cmake --build build --config Release
