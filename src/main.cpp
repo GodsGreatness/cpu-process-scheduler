@@ -57,6 +57,7 @@ void printHelp() {
     std::cout << "  --preemptive         Enable preemption for priority scheduling\n";
     std::cout << "  --aging              Enable dynamic priority aging\n";
     std::cout << "  --compare            Run all algorithms and output comparison leaderboard\n";
+    std::cout << "  --version, -v        Display version information\n";
     std::cout << "  --help               Display this help message\n\n";
 }
 
@@ -135,6 +136,9 @@ int main(int argc, char* argv[]) {
             isAging = true;
         } else if (arg == "--compare") {
             algo = "compare";
+        } else if (arg == "--version" || arg == "-v") {
+            std::cout << "CPU Process Scheduling Simulator v1.1.0 (C++17)\n";
+            return 0;
         } else if (arg == "--help") {
             printHelp();
             return 0;

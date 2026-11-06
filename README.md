@@ -87,6 +87,15 @@ classDiagram
 
 ### Build Instructions
 
+#### One-Click Automated Demo:
+```bash
+# On Windows PowerShell:
+powershell scripts/run_demo.ps1
+
+# On Linux / macOS:
+bash scripts/run_demo.sh
+```
+
 #### Using Make:
 ```bash
 # Build both main simulator and test runner
@@ -131,6 +140,7 @@ ctest --test-dir build --output-on-failure
 | `--preemptive` | *(none)* | Enable preemption for priority scheduling | Disabled |
 | `--aging` | *(none)* | Enable starvation prevention via dynamic priority aging | Disabled |
 | `--compare` | *(none)* | Run all policies concurrently and display leaderboard | Active |
+| `--version, -v` | *(none)* | Display application version and exit | Disabled |
 
 ---
 
@@ -215,6 +225,9 @@ cpu-process-scheduler/
 │   ├── basic.txt
 │   ├── preemption_test.txt
 │   └── heavy_concurrency.txt
+├── scripts/                     # Cross-platform automated demo scripts
+│   ├── run_demo.ps1
+│   └── run_demo.sh
 ├── .gitignore
 ├── Makefile
 ├── CMakeLists.txt
