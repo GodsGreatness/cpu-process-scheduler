@@ -8,30 +8,36 @@ on:
 
 jobs:
   build-and-test:
-    name: Build & Test (${{ matrix.os }} - ${{ matrix.cxx }})
+    name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        cxx: [g++, clang++]
-        exclude:
-          - os: windows-latest
-            cxx: clang++
+        include:
+          - name: Linux (Ubuntu) - GCC
+            os: ubuntu-latest
+            cmake_generator: ""
+            cmake_cxx: "-DCMAKE_CXX_COMPILER=g++"
+
+          - name: Linux (Ubuntu) - Clang
+            os: ubuntu-latest
+            cmake_generator: ""
+            cmake_cxx: "-DCMAKE_CXX_COMPILER=clang++"
+
+          - name: Windows - MSVC
+            os: windows-latest
+            cmake_generator: '-G "Visual Studio 17 2022" -A x64'
+            cmake_cxx: ""
 
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Set up CMake
-      uses: jwlawson/actions-setup-cmake@v2
-      with:
-        cmake-version: '3.28.x'
-
     - name: Configure CMake
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release ${{ matrix.cmake_generator }} ${{ matrix.cmake_cxx }}
 
     - name: Build Targets
       run: cmake --build build --config Release
 
     - name: Run Unit Tests
-      run: ctest --test-dir build --output-on-failure
+      run: ctest --test-dir build -C Release --output-on-failure
